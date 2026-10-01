@@ -1,0 +1,57 @@
+V11 STATISTICS V2 — GENERIC VS SHIFT-SPECIFIC EFFECT
+==========================================================================================
+
+Primary outcome: raw rollout error reduction.
+Shift-specific excess = shifted reduction - M×1 I×1 control reduction.
+5-vs-10 is unpaired because the budget-specific subset RNG differs.
+Shift-vs-control and 2x2 interaction are exploratory matched-subset contrasts (n=5).
+
+SHIFT-SPECIFIC EXCESS REDUCTION
+------------------------------------------------------------------------------------------
+ 5 traj | M×3 I×1 | excess=-0.001255 | CI95=[-0.004440,+0.001931] | exact p=0.5000 | positive=3/5
+ 5 traj | M×1 I×3 | excess=-0.000560 | CI95=[-0.002085,+0.000964] | exact p=0.4375 | positive=2/5
+ 5 traj | M×2 I×2 | excess=-0.000541 | CI95=[-0.003074,+0.001992] | exact p=0.5625 | positive=2/5
+ 5 traj | M×3 I×3 | excess=+0.000760 | CI95=[-0.000877,+0.002398] | exact p=0.3125 | positive=4/5
+ 5 traj | M×3 I×5 | excess=-0.000505 | CI95=[-0.002327,+0.001317] | exact p=0.5000 | positive=2/5
+ 5 traj | M×5 I×3 | excess=-0.001656 | CI95=[-0.004266,+0.000954] | exact p=0.0625 | positive=0/5
+ 5 traj | M×5 I×5 | excess=-0.000330 | CI95=[-0.002104,+0.001443] | exact p=0.6250 | positive=2/5
+10 traj | M×3 I×1 | excess=-0.001289 | CI95=[-0.002658,+0.000080] | exact p=0.1250 | positive=1/5
+10 traj | M×1 I×3 | excess=+0.000182 | CI95=[-0.001135,+0.001498] | exact p=0.7500 | positive=4/5
+10 traj | M×2 I×2 | excess=-0.000278 | CI95=[-0.001253,+0.000698] | exact p=0.5000 | positive=2/5
+10 traj | M×3 I×3 | excess=-0.000378 | CI95=[-0.001431,+0.000676] | exact p=0.3125 | positive=1/5
+10 traj | M×3 I×5 | excess=+0.000027 | CI95=[-0.000906,+0.000959] | exact p=0.8750 | positive=3/5
+10 traj | M×5 I×3 | excess=-0.000677 | CI95=[-0.001643,+0.000289] | exact p=0.1875 | positive=1/5
+10 traj | M×5 I×5 | excess=-0.000183 | CI95=[-0.002235,+0.001869] | exact p=0.8125 | positive=2/5
+
+5 VS 10 — UNPAIRED
+------------------------------------------------------------------------------------------
+M×1 I×1 | reduction     | 10-5=+0.000737 | Welch p=0.1492 | perm p=0.1508
+M×1 I×1 | recovery_pct  | 10-5=+2.730320 | Welch p=0.1492 | perm p=0.1508
+M×3 I×1 | reduction     | 10-5=+0.000702 | Welch p=0.5645 | perm p=0.5635
+M×3 I×1 | recovery_pct  | 10-5=+2.505343 | Welch p=0.5645 | perm p=0.5635
+M×1 I×3 | reduction     | 10-5=+0.001479 | Welch p=0.0541 | perm p=0.0635
+M×1 I×3 | recovery_pct  | 10-5=+5.946771 | Welch p=0.0541 | perm p=0.0635
+M×2 I×2 | reduction     | 10-5=+0.001000 | Welch p=0.2895 | perm p=0.2619
+M×2 I×2 | recovery_pct  | 10-5=+3.803159 | Welch p=0.2895 | perm p=0.2619
+M×3 I×3 | reduction     | 10-5=-0.000401 | Welch p=0.4855 | perm p=0.4524
+M×3 I×3 | recovery_pct  | 10-5=-1.553601 | Welch p=0.4855 | perm p=0.4524
+M×3 I×5 | reduction     | 10-5=+0.001269 | Welch p=0.1438 | perm p=0.0873
+M×3 I×5 | recovery_pct  | 10-5=+5.200133 | Welch p=0.1438 | perm p=0.0873
+M×5 I×3 | reduction     | 10-5=+0.001717 | Welch p=0.1069 | perm p=0.0476
+M×5 I×3 | recovery_pct  | 10-5=+6.409491 | Welch p=0.1069 | perm p=0.0476
+M×5 I×5 | reduction     | 10-5=+0.000885 | Welch p=0.2495 | perm p=0.2540
+M×5 I×5 | recovery_pct  | 10-5=+3.512502 | Welch p=0.2495 | perm p=0.2540
+
+2X2 INTERACTION — EXPLORATORY
+------------------------------------------------------------------------------------------
+ 5 traj | reduction interaction=+0.002575 | CI95=[-0.000487,+0.005637] | exact p=0.1250
+ 5 traj | recovery interaction=+9.610 pp | CI95=[-1.410,+20.629] | exact p=0.1250
+10 traj | reduction interaction=+0.000730 | CI95=[-0.001873,+0.003333] | exact p=0.5625
+10 traj | recovery interaction=+2.334 pp | CI95=[-7.512,+12.180] | exact p=0.5625
+
+INTERPRETATION
+------------------------------------------------------------------------------------------
+A positive excess reduction means the shifted condition improved more than generic control adaptation.
+A near-zero excess means observed improvement is largely compatible with the generic adaptation effect.
+All p-values are exploratory because n=5 and the training random seed is configuration-specific.
+The experiment remains a localized link5 dynamics perturbation in the Panda Lift benchmark.
