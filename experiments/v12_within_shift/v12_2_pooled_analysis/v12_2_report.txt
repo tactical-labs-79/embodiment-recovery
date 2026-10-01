@@ -1,0 +1,14 @@
+V12.2 — Pooled shift-specific evidence / budget interaction
+Input: v12_1_within_shift_results.csv
+Rows: 20
+Pooled mean extra recovery: +2.584832 pp
+Pooled 95% t CI: [+0.246483, +4.923181] pp
+Pooled one-sample t p: 0.032045
+Pooled exact sign-flip p: 0.029917
+Pooled positive runs: 14/20
+Budget 5 mean: +3.075920 pp
+Budget 10 mean: +2.093744 pp
+Budget interaction (10-5): -0.982177 pp
+Budget interaction 95% Welch CI: [-5.792705, +3.828352] pp
+Budget interaction Welch p: 0.672455
+Budget interaction exact permutation p: 0.673580
