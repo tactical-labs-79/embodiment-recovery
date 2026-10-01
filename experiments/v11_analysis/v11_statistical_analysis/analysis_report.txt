@@ -1,0 +1,50 @@
+V11 STATISTICAL ANALYSIS REPORT
+==========================================================================================
+Input: embodiment_recovery_v11_compound_dynamics_results.npz
+Rows: 80
+
+Design note: V11 is a sparse 8-cell Mass×Inertia design, not a complete 4×4 factorial.
+The formal interaction analysis therefore uses the fully observed 2×2 block (1,1), (3,1), (1,3), (3,3).
+
+2×2 INTERACTION
+------------------------------------------------------------------------------------------
+budget= 5 | metric=recovery_pct  | interaction=+9.609870 | CI95=[-1.409522, +20.629262] | exact p=0.1250
+budget= 5 | metric=reduction     | interaction=+0.002575 | CI95=[-0.000487, +0.005637] | exact p=0.1250
+budget=10 | metric=recovery_pct  | interaction=+2.334475 | CI95=[-7.511505, +12.180456] | exact p=0.5625
+budget=10 | metric=reduction     | interaction=+0.000730 | CI95=[-0.001873, +0.003333] | exact p=0.5625
+
+5 → 10 TRAJECTORY EFFECT
+------------------------------------------------------------------------------------------
+M×1 I×1 | 10-5=+2.730320 | CI95=[-0.773780, +6.234421] | exact p=0.1250
+M×3 I×1 | 10-5=+2.505343 | CI95=[-10.194065, +15.204752] | exact p=0.6875
+M×1 I×3 | 10-5=+5.946771 | CI95=[+0.053197, +11.840346] | exact p=0.1250
+M×2 I×2 | 10-5=+3.803159 | CI95=[-6.372849, +13.979168] | exact p=0.3125
+M×3 I×3 | 10-5=-1.553601 | CI95=[-4.859837, +1.752635] | exact p=0.2500
+M×3 I×5 | 10-5=+5.200133 | CI95=[-2.409876, +12.810143] | exact p=0.1250
+M×5 I×3 | 10-5=+6.409491 | CI95=[-4.938595, +17.757578] | exact p=0.1875
+M×5 I×5 | 10-5=+3.512502 | CI95=[-2.309250, +9.334254] | exact p=0.1875
+
+SHIFTED VS CONTROL
+------------------------------------------------------------------------------------------
+budget= 5 | M×3 I×1 | vs control=-5.340940 | exact p=0.4375
+budget= 5 | M×1 I×3 | vs control=-0.249874 | exact p=1.0000
+budget= 5 | M×2 I×2 | vs control=-1.441464 | exact p=0.6875
+budget= 5 | M×3 I×3 | vs control=+4.019056 | exact p=0.1250
+budget= 5 | M×3 I×5 | vs control=+0.414649 | exact p=0.8750
+budget= 5 | M×5 I×3 | vs control=-5.998625 | exact p=0.0625
+budget= 5 | M×5 I×5 | vs control=+0.365284 | exact p=0.8750
+budget=10 | M×3 I×1 | vs control=-5.565918 | exact p=0.0625
+budget=10 | M×1 I×3 | vs control=+2.966577 | exact p=0.1875
+budget=10 | M×2 I×2 | vs control=-0.368625 | exact p=0.8125
+budget=10 | M×3 I×3 | vs control=-0.264866 | exact p=0.8750
+budget=10 | M×3 I×5 | vs control=+2.884462 | exact p=0.1875
+budget=10 | M×5 I×3 | vs control=-2.319454 | exact p=0.1875
+budget=10 | M×5 I×5 | vs control=+1.147466 | exact p=0.7500
+
+INTERPRETATION GUARDRAILS
+------------------------------------------------------------------------------------------
+1. Positive M×1 I×1 recovery means generic adaptation/fine-tuning can improve error even without a shift.
+2. Shifted-vs-control comparisons are therefore important before attributing gains specifically to the physical shift.
+3. The 2×2 contrast tests non-additivity of mass and inertia effects only in the observed 1↔3 block.
+4. n=5 repeats means uncertainty is large; exact sign-flip p-values are reported in addition to t-tests.
+5. This remains a localized link5 dynamics perturbation in the Panda Lift benchmark, not a universal robot result.
