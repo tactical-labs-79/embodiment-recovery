@@ -1,0 +1,34 @@
+V12.2 — WITHIN-SHIFT CONTROL / 20 PAIRED REPEATS
+==========================================================================================
+A = no-shift adaptation source (M×1 I×1).
+B = shifted target (M×5 I×5).
+
+V12.1 repeats 1–10 are reused when the prior V12.1 CSV is available.
+V12.2 trains only repeats 11–20, preserving the same protocol.
+
+Primary contrast = generic A→B vs shift-specific B→B.
+Positive extra recovery means B-trained adaptation performs better on B.
+
+GUARDRAILS
+------------------------------------------------------------------------------------------
+Same adaptation subset seeds are paired between A and B.
+Same B validation seeds are used for both modes.
+Same B confirmation seeds are used for both modes.
+This is an extension from n=10 to n=20 paired repeats, not a new shift configuration.
+Validation-B early stopping remains part of the protocol, so the generic condition is not blind to B validation data.
+
+Budget 5 trajectories
+Generic recovery mean: +19.025%
+Shift-specific recovery mean: +23.145%
+Extra recovery: +4.120 pp
+95% CI: [+1.027, +7.212] pp
+Exact sign-flip p: 0.0059
+Positive repeats: 15/20
+
+Budget 10 trajectories
+Generic recovery mean: +22.550%
+Shift-specific recovery mean: +25.414%
+Extra recovery: +2.865 pp
+95% CI: [-0.238, +5.967] pp
+Exact sign-flip p: 0.0681
+Positive repeats: 14/20
