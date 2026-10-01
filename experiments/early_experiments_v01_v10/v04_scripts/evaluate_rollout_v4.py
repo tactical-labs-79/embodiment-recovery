@@ -1,0 +1,313 @@
+import numpy as np
+
+import torch
+
+import torch.nn as nn
+
+import robosuite as suite
+
+MODEL_FILE = "dynamics_model_v4.pt"
+
+TEST_SEEDS = [1001, 2002, 3003, 4004, 5005]
+
+STEPS = 100
+
+def get_state(obs):
+
+    joint_pos = np.asarray(
+
+        obs["robot0_joint_pos"],
+
+        dtype=np.float32
+
+    )
+
+    joint_vel = np.asarray(
+
+        obs["robot0_joint_vel"],
+
+        dtype=np.float32
+
+    )
+
+    eef_pos = np.asarray(
+
+        obs["robot0_eef_pos"],
+
+        dtype=np.float32
+
+    )
+
+    state = np.concatenate([
+
+        joint_pos,
+
+        joint_vel,
+
+        eef_pos
+
+    ]).astype(np.float32)
+
+    if state.shape != (17,):
+
+        raise ValueError(
+
+            f"State dimension salah: {state.shape}, expected (17,)"
+
+        )
+
+    return state
+
+class DynamicsModelV4(nn.Module):
+
+    def __init__(self):
+
+        super().__init__()
+
+        self.network = nn.Sequential(
+
+            nn.Linear(24, 128),
+
+            nn.ReLU(),
+
+            nn.Linear(128, 128),
+
+            nn.ReLU(),
+
+            nn.Linear(128, 17)
+
+        )
+
+    def forward(self, x):
+
+        return self.network(x)
+
+checkpoint = torch.load(
+
+    MODEL_FILE,
+
+    map_location="cpu",
+
+    weights_only=True
+
+)
+
+model = DynamicsModelV4()
+
+model.load_state_dict(checkpoint["model_state_dict"])
+
+model.eval()
+
+assert checkpoint["input_dim"] == 24
+
+assert checkpoint["output_dim"] == 17
+
+print("=" * 60)
+
+print("V4 FREE-RUNNING ROLLOUT")
+
+print("=" * 60)
+
+print("Model : dynamics_model_v4.pt")
+
+print("Steps : 100")
+
+print("Seeds : 1001, 2002, 3003, 4004, 5005")
+
+print()
+
+rollout_maes = []
+
+final_maes = []
+
+max_errors = []
+
+for seed in TEST_SEEDS:
+
+    env = suite.make(
+
+        env_name="Lift",
+
+        robots="Panda",
+
+        has_renderer=False,
+
+        has_offscreen_renderer=False,
+
+        use_camera_obs=False,
+
+        control_freq=20,
+
+    )
+
+    np.random.seed(seed)
+
+    obs = env.reset()
+
+    real_state = get_state(obs)
+
+    predicted_state = real_state.copy()
+
+    step_errors = []
+
+    for step in range(STEPS):
+
+        action = np.zeros(7, dtype=np.float32)
+
+        action_index = np.random.randint(0, 7)
+
+        action_sign = np.random.choice([-1.0, 1.0])
+
+        action_magnitude = np.random.uniform(0.05, 0.20)
+
+        action[action_index] = (
+
+            action_sign * action_magnitude
+
+        )
+
+        next_obs, reward, done, info = env.step(action)
+
+        real_next_state = get_state(next_obs)
+
+        model_input = np.concatenate([
+
+            predicted_state,
+
+            action
+
+        ]).astype(np.float32)
+
+        if model_input.shape != (24,):
+
+            raise ValueError(
+
+                f"Input dimension salah: "
+
+                f"{model_input.shape}, expected (24,)"
+
+            )
+
+        with torch.no_grad():
+
+            x = torch.from_numpy(
+
+                model_input
+
+            ).unsqueeze(0)
+
+            predicted_next_state = (
+
+                model(x)
+
+                .squeeze(0)
+
+                .numpy()
+
+            )
+
+        if predicted_next_state.shape != (17,):
+
+            raise ValueError(
+
+                f"Output dimension salah: "
+
+                f"{predicted_next_state.shape}, expected (17,)"
+
+            )
+
+        error = np.abs(
+
+            predicted_next_state - real_next_state
+
+        )
+
+        step_errors.append(error)
+
+        real_state = real_next_state
+
+        predicted_state = predicted_next_state
+
+    env.close()
+
+    step_errors = np.asarray(step_errors)
+
+    rollout_mae = step_errors.mean()
+
+    final_mae = step_errors[-1].mean()
+
+    max_error = step_errors.max()
+
+    rollout_maes.append(rollout_mae)
+
+    final_maes.append(final_mae)
+
+    max_errors.append(max_error)
+
+    print(
+
+        f"Seed {seed} | "
+
+        f"Rollout MAE: {rollout_mae:.8f} | "
+
+        f"Final MAE: {final_mae:.8f} | "
+
+        f"Max: {max_error:.8f}"
+
+    )
+
+rollout_maes = np.asarray(rollout_maes)
+
+final_maes = np.asarray(final_maes)
+
+max_errors = np.asarray(max_errors)
+
+print()
+
+print("=" * 60)
+
+print("V4 ROLLOUT SUMMARY")
+
+print("=" * 60)
+
+print(
+
+    f"Average Rollout MAE : "
+
+    f"{rollout_maes.mean():.8f}"
+
+)
+
+print(
+
+    f"Std Rollout MAE     : "
+
+    f"{rollout_maes.std():.8f}"
+
+)
+
+print(
+
+    f"Average Final MAE   : "
+
+    f"{final_maes.mean():.8f}"
+
+)
+
+print(
+
+    f"Average Max Error   : "
+
+    f"{max_errors.mean():.8f}"
+
+)
+
+print(
+
+    f"Max Error Overall   : "
+
+    f"{max_errors.max():.8f}"
+
+)
+
+print("=" * 60)
