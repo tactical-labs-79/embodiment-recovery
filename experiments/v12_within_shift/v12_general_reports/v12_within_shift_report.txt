@@ -1,0 +1,30 @@
+V12 — WITHIN-SHIFT CONTROL
+==========================================================================================
+A = no-shift adaptation source (M×1 I×1).
+B = shifted target (M×5 I×5).
+
+Primary contrast = generic A→B vs shift-specific B→B.
+Positive extra recovery means B-trained adaptation performs better on B.
+
+GUARDRAILS
+------------------------------------------------------------------------------------------
+Both modes use identical adaptation seed subsets.
+Both modes are selected using identical B validation seeds.
+Final results use fresh B confirmation seeds.
+n=5 repeats per budget is exploratory; do not treat a p-value as the sole evidence.
+
+Budget 5 trajectories
+Generic recovery mean: +19.525%
+Shift-specific recovery mean: +23.786%
+Extra recovery: +4.262 pp
+95% CI: [-5.208, +13.732] pp
+Exact sign-flip p: 0.4375
+Positive repeats: 3/5
+
+Budget 10 trajectories
+Generic recovery mean: +25.179%
+Shift-specific recovery mean: +27.299%
+Extra recovery: +2.120 pp
+95% CI: [-5.977, +10.217] pp
+Exact sign-flip p: 0.5625
+Positive repeats: 3/5
