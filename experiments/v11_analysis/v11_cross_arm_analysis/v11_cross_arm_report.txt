@@ -1,0 +1,12 @@
+V11-CROSS-ARM — retroactive generic vs shift-specific comparison
+==========================================================================================
+PILOT / EXPLORATORY at n=5 per (shift, budget). Do not treat as
+confirmatory. The (1,1) control is excluded (it IS the generic arm).
+
+Rows: 14 (7 shifts x 2 budgets)
+Holm-Bonferroni correction applied across all rows in this table.
+
+Generic arm = checkpoint trained on (M1,I1), re-evaluated (no
+retraining) on each target shift's confirmation seeds.
+Shift-specific arm = recovery_pct already stored in the V11 .npz
+for that exact shift/budget/repeat.
