@@ -1,5 +1,5 @@
 V13 — CROSS-SHIFT GENERALIZATION BENCHMARK
-==========================================================================================
+============================================
 Tests whether the shift-specific adaptation advantage (V12/V12.1/V12.2,
 M5/I5) survives across different embodiment shift types/magnitudes.
 
@@ -16,3 +16,26 @@ CAUTION — SEQUENTIAL TESTING ON M5_I5:
 The M5_I5 n was increased across V12 (n=5) -> V12.1 (n=10) ->
 V12.2 (n=20) based on interim results. Its p-value here should be
 read as exploratory, not a clean confirmatory test.
+
+======================
+V13 CROSS-SHIFT TABLE
+====================== 
+shift    budget  generic%   specific%  extra_pp               95% CI   raw_p    holm_p    pos
+M5_I5    5       +19.025%   +23.145%   +4.120       [+1.03, +7.21]   0.0059   0.0411   15/20
+M5_I5    10      +22.550%   +25.414%   +2.865       [-0.24, +5.97]   0.0681   0.2042   14/20
+M3_I3    5       +21.457%   +23.579%   +2.123       [-0.25, +4.49]   0.0445   0.1782   14/20
+M3_I3    10      +23.777%   +24.700%   +0.923       [-1.15, +2.99]   0.3614   0.4081   13/20
+M5_I1    5       +20.679%   +19.110%   -1.569       [-4.05, +0.92]   0.2040   0.4081   10/20
+M5_I1    10      +23.178%   +20.656%   -2.522       [-3.80, -1.25]   0.0007   0.0053    4/20
+M1_I5    5       +22.265%   +26.264%   +3.999       [+0.79, +7.21]   0.0148   0.0741   16/20
+M1_I5    10      +24.466%   +28.934%   +4.468       [+1.30, +7.63]   0.0073   0.0436   15/20
+
+INTERPRETATION
+===================
+The advantage of shift-specific adaptation is shift-dependent rather than
+universal. Its direction is consistently positive under inertia-containing
+shifts (M1/I5 and M5/I5), reaching statistical significance in one of two
+budget conditions for each; the effect diminishes and loses significance
+for the smaller compound shift (M3/I3); and it reverses-becoming
+significantly negative-under the mass-only shift (M5/I1) at the larger
+budget.
