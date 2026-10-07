@@ -1,0 +1,18 @@
+V13 — CROSS-SHIFT GENERALIZATION BENCHMARK
+==========================================================================================
+Tests whether the shift-specific adaptation advantage (V12/V12.1/V12.2,
+M5/I5) survives across different embodiment shift types/magnitudes.
+
+M5_I5 rows are REUSED from V12.2 (not retrained). M3_I3, M5_I1, M1_I5
+are new fresh runs with 20 paired repeats each, identical protocol.
+
+CAUTION — MULTIPLE COMPARISONS:
+This table reports 8 tests (4 shifts x 2 budgets). Use the
+Holm-Bonferroni corrected p-value (holm_bonferroni_p), not the raw
+exact sign-flip p, when judging whether an individual cell is
+significant after accounting for testing 8 hypotheses at once.
+
+CAUTION — SEQUENTIAL TESTING ON M5_I5:
+The M5_I5 n was increased across V12 (n=5) -> V12.1 (n=10) ->
+V12.2 (n=20) based on interim results. Its p-value here should be
+read as exploratory, not a clean confirmatory test.
